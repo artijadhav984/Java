@@ -1,0 +1,143 @@
+/*
+ * Assignment 2: FooCorporation
+ * Name: Arti
+ * Created date: 04 Apr 2017
+ * Last updted: 
+ */
+class Marathon {
+    public static void main (String[] arguments) {
+        String[] names = {
+            "Elena", "Thomas", "Hamilton", "Suzie", "Phil", "Matt", "Alex",
+            "Emma", "John", "James", "Jane", "Emily", "Daniel", "Neda",
+            "Aaron", "Kate"
+        };
+
+        int[] times = {
+            341, 273, 278, 329, 445, 402, 388, 275, 243, 334, 412, 393, 299,
+            343, 317, 265
+        };
+
+        for (int i = 0; i < names.length; i++) {
+            System.out.println(names[i] + ": " + times[i]);
+        }
+        
+        int fastestRunnerIndex = GetFastestRunner(times);
+        
+        if(fastestRunnerIndex != -1)
+        {
+        	System.out.println("Fastest runner is " + names[fastestRunnerIndex] + ": " + times[fastestRunnerIndex]);
+        }
+        
+        int secondFastestRunnerIndex = GetSecondFastestRunner(times);
+        
+        if(secondFastestRunnerIndex != -1)
+        {
+        	System.out.println("Second fastest runner is " + names[secondFastestRunnerIndex] + ": " + times[secondFastestRunnerIndex]);
+        }
+        
+        int[] firstTwoWinners = GetFirstTwoWinners(times);
+        System.out.println("Fastest runners are:");
+        
+        for(int i = 0; i < firstTwoWinners.length; i++)
+        {
+        	if(firstTwoWinners[i] != -1)
+        	{
+        		System.out.println(i+1 + ". " + names[firstTwoWinners[i]] + ": " + times[firstTwoWinners[i]]);
+        	}
+        }
+        
+    }
+    
+    static int[] GetFirstTwoWinners(int[] times)
+    {
+    	int[] firstTwoWinners = new int[2];
+    	
+    	try 
+    	{
+    		int minValIndex = -1;
+        	int secondMinValIndex = -1;
+    		Integer minVal = null;
+    		Integer secondMinVal = null;
+    		
+    		for (int i = 0; i < times.length; i++) 
+    		{   
+    			if(minVal == null || minVal > times[i])
+                {
+    				if(minVal != null)
+    				{
+    					secondMinVal = minVal;
+    					secondMinValIndex = minValIndex;
+    				}
+    				
+                	minVal = times[i];
+                	minValIndex = i;
+                }
+    			else if((secondMinVal == null || secondMinVal > times[i]) && (minValIndex != i))
+    			{
+    				secondMinVal = times[i];
+    				secondMinValIndex = i;
+    			}
+            }
+    		
+    		firstTwoWinners[0] = minValIndex;
+    		firstTwoWinners[1] = secondMinValIndex;
+    	}
+		catch(Exception ex)
+		{
+			System.out.println("Error has occurred while getting fastest runner !!! \nDetails: " + ex.getMessage());
+		}
+    	
+    	return firstTwoWinners;
+    }
+    
+    static int GetFastestRunner(int[] times)
+    {
+    	int minValIndex = -1;
+    	
+    	try 
+    	{
+    		Integer minVal = null;
+    		
+    		for (int i = 0; i < times.length; i++) 
+    		{   
+    			if(minVal == null || minVal > times[i])
+                {
+                	minVal = times[i];
+                	minValIndex = i;
+                }
+            }
+    	}
+		catch(Exception ex)
+		{
+			System.out.println("Error has occurred while getting fastest runner !!! \nDetails: " + ex.getMessage());
+		}
+    	
+    	return minValIndex;
+    }
+    
+    static int GetSecondFastestRunner(int[] times)
+    {
+    	int secondMinValIndex = -1;
+    	
+    	try 
+    	{
+    		int minValIndex  = GetFastestRunner(times);
+    		Integer secondMinVal = null;
+    		
+    		for (int i = 0; i < times.length; i++) 
+    		{   
+    			if((i != minValIndex) && (secondMinVal == null || secondMinVal > times[i]))
+                {
+    				secondMinVal = times[i];
+    				secondMinValIndex = i;
+                }
+            }
+    	}
+		catch(Exception ex)
+		{
+			System.out.println("Error has occurred while getting fastest runner !!! \nDetails: " + ex.getMessage());
+		}
+    	
+    	return secondMinValIndex;
+    }
+} 
