@@ -1,8 +1,8 @@
 /*
- * Assignment 2: FooCorporation
+ * Assignment 3: Marathon
  * Name: Arti
  * Created date: 04 Apr 2017
- * Last updted: 
+ * Last updted: 04 Apr 2017
  */
 class Marathon {
     public static void main (String[] arguments) {
@@ -21,36 +21,40 @@ class Marathon {
             System.out.println(names[i] + ": " + times[i]);
         }
         
-        int fastestRunnerIndex = GetFastestRunner(times);
+        int minIndex = GetMinIndex(times);
         
-        if(fastestRunnerIndex != -1)
+        if(minIndex != -1)
         {
-        	System.out.println("Fastest runner is " + names[fastestRunnerIndex] + ": " + times[fastestRunnerIndex]);
+        	System.out.println("Fastest runner is " + names[minIndex] + ": " + times[minIndex]);
         }
         
-        int secondFastestRunnerIndex = GetSecondFastestRunner(times);
+        int secondMinIndex = GetSecondMinIndex(times);
         
-        if(secondFastestRunnerIndex != -1)
+        if(secondMinIndex != -1)
         {
-        	System.out.println("Second fastest runner is " + names[secondFastestRunnerIndex] + ": " + times[secondFastestRunnerIndex]);
+        	System.out.println("Second fastest runner is " + names[secondMinIndex] + ": " + times[secondMinIndex]);
         }
         
-        int[] firstTwoWinners = GetFirstTwoWinners(times);
+        int[] firstTwoMinIndices = GetFirstTwoMinIndices(times);
         System.out.println("Fastest runners are:");
         
-        for(int i = 0; i < firstTwoWinners.length; i++)
+        for(int i = 0; i < firstTwoMinIndices.length; i++)
         {
-        	if(firstTwoWinners[i] != -1)
+        	if(firstTwoMinIndices[i] != -1)
         	{
-        		System.out.println(i+1 + ". " + names[firstTwoWinners[i]] + ": " + times[firstTwoWinners[i]]);
+        		System.out.println(i+1 + ". " + names[firstTwoMinIndices[i]] + ": " + times[firstTwoMinIndices[i]]);
         	}
         }
         
     }
     
-    static int[] GetFirstTwoWinners(int[] times)
+    /*
+     * Method to get indices of first two minimum values
+     * int[] times: array of integer values to be compared
+     */
+    static int[] GetFirstTwoMinIndices(int[] times)
     {
-    	int[] firstTwoWinners = new int[2];
+    	int[] firstTwoMinIndices = new int[2];
     	
     	try 
     	{
@@ -79,18 +83,22 @@ class Marathon {
     			}
             }
     		
-    		firstTwoWinners[0] = minValIndex;
-    		firstTwoWinners[1] = secondMinValIndex;
+    		firstTwoMinIndices[0] = minValIndex;
+    		firstTwoMinIndices[1] = secondMinValIndex;
     	}
 		catch(Exception ex)
 		{
-			System.out.println("Error has occurred while getting fastest runner !!! \nDetails: " + ex.getMessage());
+			System.out.println("Error has occurred while getting min indices !!! \nDetails: " + ex.getMessage());
 		}
     	
-    	return firstTwoWinners;
+    	return firstTwoMinIndices;
     }
     
-    static int GetFastestRunner(int[] times)
+    /*
+     * Method to get index of minimum value
+     * int[] times: array of integer values
+     */
+    static int GetMinIndex(int[] times)
     {
     	int minValIndex = -1;
     	
@@ -109,19 +117,23 @@ class Marathon {
     	}
 		catch(Exception ex)
 		{
-			System.out.println("Error has occurred while getting fastest runner !!! \nDetails: " + ex.getMessage());
+			System.out.println("Error has occurred while getting min index !!! \nDetails: " + ex.getMessage());
 		}
     	
     	return minValIndex;
     }
     
-    static int GetSecondFastestRunner(int[] times)
+    /*
+     * Method to get index of second minimum value
+     * int[] times: array of integer values
+     */
+    static int GetSecondMinIndex(int[] times)
     {
     	int secondMinValIndex = -1;
     	
     	try 
     	{
-    		int minValIndex  = GetFastestRunner(times);
+    		int minValIndex  = GetMinIndex(times);
     		Integer secondMinVal = null;
     		
     		for (int i = 0; i < times.length; i++) 
@@ -135,7 +147,7 @@ class Marathon {
     	}
 		catch(Exception ex)
 		{
-			System.out.println("Error has occurred while getting fastest runner !!! \nDetails: " + ex.getMessage());
+			System.out.println("Error has occurred while getting second min index !!! \nDetails: " + ex.getMessage());
 		}
     	
     	return secondMinValIndex;
