@@ -11,12 +11,12 @@ import com.bookshop.restservice.domain.Book;
  */
 public class BookRepositoryBean implements BookRepository {
 
-	//@EJB
+//	@EJB
 	private AuthorRepository authorRepository;
 	private final Map<String, Book> books = new HashMap<>();
 	
-	public BookRepositoryBean() {
-		authorRepository = new AuthorRepositoryBean();
+	public BookRepositoryBean(AuthorRepository authorRepository) {
+		this.authorRepository = authorRepository;
 	}
 	    
 	@Override
@@ -38,7 +38,7 @@ public class BookRepositoryBean implements BookRepository {
 
 	@Override
 	public Optional<Book> getById(final String id) {
-		return Optional.of(books.get(id));
+		return Optional.ofNullable(books.get(id));
 	}
 
 }

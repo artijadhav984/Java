@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.constraints.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -14,13 +15,27 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Book implements Serializable {
 	private static final long serialVersionUID = -2983347345964558843L;
-	private String id;
-	private String title;
-	private String description;
-	private List<Author> authors;
-	private float price;
-	private String link;
-	private Date publishedDate;
+	@Size(min = 10, max = 10, message = "ISBN should be 10 characters")
+    private String id;
+
+    @Size(min = 5)
+    private String title;
+
+    @Size(min = 20)
+    private String description;
+
+    @Size(min = 1)
+    private List<Author> authors;
+
+    @DecimalMin("0.00")
+    private Float price;
+
+    @NotNull
+    @Pattern(regexp="^(https?:\\/\\/)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\\/\\w \\.-]*)*\\/?$")
+    private String link;
+
+    @Past
+    private Date publishedDate;
 	
 	public Book() {
 		
