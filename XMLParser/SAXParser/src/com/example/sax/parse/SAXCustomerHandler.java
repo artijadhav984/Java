@@ -19,14 +19,25 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import com.example.model.Customer;
 
+/**
+ * Class: SAX (Simple API for XML) Customer XML file Reader
+ * @author Arti
+ *
+ */
 public class SAXCustomerHandler extends DefaultHandler {
 	
 	private List<Customer> data;
 	private Customer customer;
 	private String currentElement = "";
 	private StringBuilder currentText;
-	private static final String XMLDATEFORMAT = "yyyy-MM-dd'T'HH:mm:ss";
 	
+	/**
+	 * Method reads data from XML file and store it into Customer list using SAX 
+	 * @param filename
+	 * @return Customer list
+	 * @throws IOException
+	 * @throws ParserConfigurationException
+	 */
 	public List<Customer> readDataFromXml(String filename) throws IOException, ParserConfigurationException {
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		// if xml contains namespace 
@@ -42,16 +53,28 @@ public class SAXCustomerHandler extends DefaultHandler {
 		return data;
 	}
 	
+	/**
+	 * Event handler for start document
+	 * Initializes data list
+	 */
 	@Override
 	public void startDocument() throws SAXException {
 		data = new ArrayList<Customer>();
 	}
 
+	/**
+	 * Event handler for end document
+	 */
 	@Override
 	public void endDocument() throws SAXException {
 		//System.out.println("End document");
 	}
 	
+	/**
+	 * Event handler for start element
+	 * Creates customer, set id and add it into list
+	 * Initializes currentText
+	 */
 	@Override
 	public void startElement(String uri, String localName, String qName,
 			Attributes attributes) throws SAXException {
@@ -77,6 +100,10 @@ public class SAXCustomerHandler extends DefaultHandler {
 		}
 	}
 	
+	/**
+	 * Event handler for end element
+	 * Sets values of customer fields using content set in character event handler
+	 */
 	@Override
 	public void endElement(String uri, String localName, String qName)
 			throws SAXException {
@@ -111,7 +138,7 @@ public class SAXCustomerHandler extends DefaultHandler {
 				break;
 
 			case Customer.JOINED:
-				DateFormat df = new SimpleDateFormat(XMLDATEFORMAT);
+				DateFormat df = new SimpleDateFormat(Customer.XMLDATEFORMAT);
 				try {
 					customer.setJoined(df.parse(content));
 				} catch (ParseException e) {
@@ -127,6 +154,10 @@ public class SAXCustomerHandler extends DefaultHandler {
 		currentElement = "";
 	}
 	
+	/**
+	 * Event handler for characters
+	 * Gets the content of element
+	 */
 	@Override
 	public void characters(char[] ch, int start, int length)
 			throws SAXException {
@@ -135,16 +166,25 @@ public class SAXCustomerHandler extends DefaultHandler {
 		}
 	}
 	
+	/**
+	 * Event handler for warning
+	 */
 	@Override
 	public void warning(SAXParseException e) throws SAXException {
 		System.out.println("Warning !!!");
 	}
 	
+	/**
+	 * Event handler for error
+	 */
 	@Override
 	public void error(SAXParseException e) throws SAXException {
 		System.out.println("Error !!!");
 	}
 	
+	/**
+	 * Event handler for fatal error
+	 */
 	@Override
 	public void fatalError(SAXParseException e) throws SAXException {
 		System.out.println("Fatal Error !!!");

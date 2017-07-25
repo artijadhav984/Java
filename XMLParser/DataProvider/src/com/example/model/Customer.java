@@ -24,7 +24,8 @@ public class Customer {
 		AGE="age",
 		BALANCE="balance",
 		ACTIVE="active",
-		JOINED="joined";
+		JOINED="joined",
+		XMLDATEFORMAT = "yyyy-MM-dd'T'HH:mm:ss";
 
 	public Customer() {
 	}
